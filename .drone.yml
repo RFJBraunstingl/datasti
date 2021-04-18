@@ -5,6 +5,10 @@ name: build-image
 steps:
   - name: build-docker-image
     image: plugins/docker
+    when:
+      event:
+        exclude:
+          - promote
     settings:
       dockerfile: build/Dockerfile
       username:

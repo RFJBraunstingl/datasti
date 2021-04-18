@@ -1,24 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Container, createStyles, Grid, Theme} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import {Container, Grid} from "@material-ui/core";
 import Category from "./Category/Category";
 import useApi from "../../hooks/useApi";
 import {Container as ContainerType} from '../../types/Container'
 import {useHistory} from "react-router-dom";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
-            marginTop: "40px",
-        },
-    }),
-);
 
 export default function Dashboard() {
 
@@ -33,7 +18,7 @@ export default function Dashboard() {
                 console.error(e)
                 replace('/login')
             })
-    }, [getAllContainers])
+    }, [getAllContainers, replace])
 
     return (
         <Container maxWidth="lg">

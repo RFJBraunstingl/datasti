@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import {ReactNode} from "react";
 
 export enum AxisAnchor {
     TOP = "top",

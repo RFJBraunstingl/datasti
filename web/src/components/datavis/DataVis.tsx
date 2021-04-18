@@ -1,9 +1,3 @@
-import {PlotTemplate} from "../plot/templates/PlotTemplate";
-import {LinePlot} from "../plot/templates/line/LinePlot";
-import {RandomDateData} from "../../utils/DataGenerator";
-import {BasicAxis} from "../plot/templates/axis/BasicAxis";
-import {AxisAnchor} from "../plot/templates/axis/AxisConsts";
-import {DateAxis} from "../plot/templates/axis/DateAxis";
 import React, {useEffect, useState} from "react";
 import useApi from "../../hooks/useApi";
 import {Datapoint} from "../../types/Datapoint";
@@ -18,10 +12,7 @@ export default function DataVis(props: any) {
         getAllDatapoints(props.match.params.container)
             .then(setData)
             .catch(e => console.error(e))
-    }, [getAllDatapoints])
-
-    const plotHeight = 600;
-    const plotWidth = 1000;
+    }, [getAllDatapoints, props.match.params.container])
 
     return <Table>
         <TableHead>
@@ -54,8 +45,11 @@ export default function DataVis(props: any) {
         </TableBody>
     </Table>
 
+    /* graph stuff
 
-    /* graph stuff */
+    const plotHeight = 600;
+    const plotWidth = 1000;
+
     return (
         <PlotTemplate width={plotWidth} height={plotHeight}>
             <LinePlot data={RandomDateData(31)}>
@@ -63,5 +57,5 @@ export default function DataVis(props: any) {
                 <DateAxis anchor={AxisAnchor.BOTTOM} unit={"kg"} ticks={30}/>
             </LinePlot>
         </PlotTemplate>
-    );
+    );*/
 }

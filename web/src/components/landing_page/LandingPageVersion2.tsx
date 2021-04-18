@@ -1,46 +1,9 @@
 import React from "react";
-//Images
-import Clock from "./01-clock.svg"
-import Statistics from "./18-statistics.svg"
-import Team from "./35-team.svg"
-import Hanger from "./49-coat hanger.svg"
-
 import MarketingImage from "./landing_image_v2.jpg"
 import useWindowDimensions from "../../utils/GetWindowDimensions";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Fab, Icon} from "@material-ui/core";
+import {Fab, Icon} from "@material-ui/core";
 import {Link} from "react-router-dom";
-
-const card1 = {
-    id: 1,
-    icon: Clock,
-    heading: "Keep Track",
-    text: "Notify your ass if you are a lazy fuck!"
-}
-
-const card2 = {
-    id: 2,
-    icon: Statistics,
-    heading: "Visualize",
-    text: "Visualize your data to acctually see the fucking change"
-}
-
-const card3 = {
-    id: 3,
-    icon: Team,
-    heading: "Share",
-    text: "Share your graphs with your non existent friends!"
-}
-
-const card4 = {
-    id: 4,
-    icon: Hanger,
-    heading: "Abort",
-    text: "Pretty self explanatory!"
-}
-
-const cards = [card1, card2, card3, card4]
-
 
 const useStyles = makeStyles((theme) => ({
     main_image: {
@@ -79,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function LandingPage() {
-    const {height, width} = useWindowDimensions();
     const classes = useStyles();
 
     return (

@@ -11,7 +11,6 @@ export function RandomData(dataPoints: number = 100): DataPoint[] {
 }
 
 export function RandomDateData(dataPoints: number = 31): DataPoint[] {
-    const max = Math.random() ;
     return [...Array(dataPoints)].map((e, i) => {
         return new DataPoint(
             DataType.NumberOverDate,
