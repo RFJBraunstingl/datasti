@@ -206,7 +206,7 @@
                         <id>exec-npm-install</id>
                         <phase>initialize</phase>
                         <configuration>
-                            <workingDirectory>./src/main/typescript</workingDirectory>
+                            <workingDirectory>../web</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>install</argument>
@@ -221,7 +221,7 @@
                         <id>exec-npm-build-frontend</id>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <workingDirectory>./src/main/typescript</workingDirectory>
+                            <workingDirectory>../web</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
