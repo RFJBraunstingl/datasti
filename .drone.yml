@@ -23,7 +23,7 @@ name: build-backend
 
 steps:
   - name: test
-    image: adoptopenjdk:11-jdk-hotspot
+    image: rfjbraunstingl/datasti-build-image:latest
     when:
       event:
         exclude:
@@ -35,7 +35,7 @@ steps:
       - ./mvnw clean verify
 
   - name: build (staging)
-    image: adoptopenjdk:11-jdk-hotspot
+    image: rfjbraunstingl/datasti-build-image:latest
     when:
       event:
         - promote
@@ -54,6 +54,7 @@ steps:
       CONTAINER_PASSWORD:
         from_secret: container-image-registry-pass
     commands:
+      - cd backend
       - ./mvnw clean package -DskipTests=true -Dquarkus.container-image.push=true
 
   - name: deploy
