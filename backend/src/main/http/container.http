@@ -1,0 +1,12 @@
+### List containers
+GET {{host}}/container
+Authorization: Bearer {{token}}
+
+### create container
+POST {{host}}/container
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "test"
+}

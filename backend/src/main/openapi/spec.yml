@@ -1,0 +1,197 @@
+openapi: 3.0.0
+info:
+  description: Datasti API for interacting with your data
+  version: 1.0.0
+  title: Datasti API
+  contact:
+    email: rfj.braunstingl@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+security:
+  - Bearer: [ ]
+paths:
+  /user/token:
+    get:
+      summary: generate access tokens for the user
+      security:
+        - BasicAuth: [ ]
+      responses:
+        '200':
+          description: token successfully created
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: the api token which may be used for further requests
+  /user/register:
+    post:
+      summary: register new user
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '201':
+          description: user created
+        '400':
+          description: input parameters are invalid
+        '409':
+          description: user already exists
+  /container:
+    get:
+      summary: Retrieve your data containers
+      responses:
+        '200':
+          description: successfully retrieved your data containers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/container'
+        '401':
+          description: autorization failed
+        '403':
+          description: invalid API token
+        '404':
+          description: container not found
+    post:
+      summary: create new container
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/container'
+      responses:
+        '201':
+          description: successfully created new container
+        '401':
+          description: authorization failed
+        '403':
+          description: invalid API token
+        '415':
+          description: the request content is not in JSON format or the Content-Type header is incorrect
+        '500':
+          description: insertion failed
+  /container/{container}:
+    parameters:
+      - name: container
+        in: path
+        required: true
+        schema:
+          type: string
+      #- name: since
+      #   description: the point after which the data shall be retrieved
+      #   in: path
+      #   required: false
+      #   schema:
+      #     type: int64
+    get:
+      summary: retrieve all datapoints in this container
+      responses:
+        '200':
+          description: successfully retrieved data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/datapoint'
+        '401':
+          description: authorization failed
+    post:
+      summary: create new data point
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/datapoint'
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '201':
+          description: successfully created data point
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/datapoint'
+        '400':
+          description: input could not be parsed correctly
+        '401':
+          description: authorization failed
+        '404':
+          description: container not found
+        '415':
+          description: the request content is not in JSON format or the Content-Type header is incorrect
+        '500':
+          description: failure while processing insertion
+components:
+  schemas:
+    container:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'weight'
+          description: Name of data container
+        description:
+          type: string
+          example: 'Tracking daily weight'
+          description: Short description what is stored in this data container
+        iconUrl:
+          type: string
+          example: 'https://images.unsplash.com/photo-1522844990619-4951c40f7eda'
+          description: An URL pointing to the title image given to this container
+    datapoint:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+          example: 1599989743437
+          description: the point in time defined as the number of milliseconds since the UNIX Epoch (00:00:00 UTC on 1 January 1970)
+        value:
+          type: string
+          example: '15.7'
+        label:
+          type: string
+          example: 'protein'
+    login:
+      type: object
+      properties:
+        username:
+          type: string
+          description: the email address of the user
+        password:
+          type: string
+          description: a secret string used to login
+    user:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+# Added by API Auto Mocking Plugin
+servers:
+  - description: Quarkus local testing
+    url: http://127.0.0.1:8080
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/TeamLippeck/Datasti/1.0.0

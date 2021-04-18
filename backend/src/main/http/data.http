@@ -1,0 +1,26 @@
+### get data in test container
+GET {{host}}/container/test
+Authorization: Bearer {{token}}
+
+### create new data point
+POST {{host}}/container/test
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "value": "1"
+}
+
+### create new data point from plain text
+POST {{host}}/container/test
+Authorization: Bearer {{token}}
+Content-Type: text/plain
+
+test value
+
+### create new data point from plain text with label
+POST {{host}}/container/test/protein
+Authorization: Bearer {{token}}
+Content-Type: text/plain
+
+test value

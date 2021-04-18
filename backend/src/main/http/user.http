@@ -1,0 +1,10 @@
+### Create User
+POST {{host}}/user/register
+Content-Type: application/x-www-form-urlencoded
+
+username=roman2&password=secret&firstname=roman&lastname=test
+
+
+### Generate Access Token
+GET {{host}}/user/token
+Authorization: Basic a a
