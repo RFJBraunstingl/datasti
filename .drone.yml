@@ -36,7 +36,7 @@ steps:
       DATABASE_URL: mongodb://mongodb:27017
     commands:
       - cd backend
-      - ./mvnw clean verify
+      - ./mvnw verify
 
   - name: build (staging)
     image: rfjbraunstingl/datasti-build-image:latest

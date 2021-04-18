@@ -1,6 +1,5 @@
 import React from "react";
 import MarketingImage from "./landing_image_v2.jpg"
-import useWindowDimensions from "../../utils/GetWindowDimensions";
 import {makeStyles} from "@material-ui/core/styles";
 import {Fab, Icon} from "@material-ui/core";
 import {Link} from "react-router-dom";
