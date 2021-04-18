@@ -9,6 +9,9 @@ steps:
       event:
         exclude:
           - promote
+      ref:
+        exclude:
+          - refs/tags/**
     settings:
       dockerfile: build/Dockerfile
       username:
@@ -38,13 +41,14 @@ steps:
       - cd backend
       - ./mvnw verify
 
+  # tags on master are automatically deployed to staging
   - name: build (staging)
     image: rfjbraunstingl/datasti-build-image:latest
     when:
-      event:
-        - promote
-      target:
-        - staging
+      branch:
+        - master
+      ref:
+        - refs/tags/**
     environment:
       QUARKUS_KUBERNETES_REPLICAS: 1
       CONTAINER_REGISTRY:
@@ -61,21 +65,20 @@ steps:
       - cd backend
       - ./mvnw clean package -DskipTests=true -Dquarkus.container-image.push=true
 
-  - name: deploy
+  - name: deploy (staging)
     image: bitnami/kubectl:latest
     when:
-      event:
-        - promote
-      target:
-        - staging
-        - production
+      branch:
+        - master
+      ref:
+        - refs/tags/**
     environment:
       RFJ_K8S_SERVER:
         from_secret: k8s-server
       RFJ_K8S_TOKEN:
         from_secret: k8s-token
     commands:
-      - kubectl apply -f backend/target/kubernetes/kubernetes.yml --namespace $DRONE_DEPLOY_TO --server $RFJ_K8S_SERVER --insecure-skip-tls-verify --token $RFJ_K8S_TOKEN
+      - kubectl apply -f backend/target/kubernetes/kubernetes.yml --namespace staging --server $RFJ_K8S_SERVER --insecure-skip-tls-verify --token $RFJ_K8S_TOKEN
 
 services:
   - name: mongodb
