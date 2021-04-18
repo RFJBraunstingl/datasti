@@ -6,6 +6,8 @@ steps:
   - name: build-docker-image
     image: plugins/docker
     when:
+      branch:
+        - master
       event:
         exclude:
           - promote
@@ -32,6 +34,9 @@ steps:
   - name: test
     image: rfjbraunstingl/datasti-build-image:latest
     when:
+      branch:
+        exclude:
+          - master
       event:
         exclude:
           - promote
@@ -41,14 +46,15 @@ steps:
       - cd backend
       - ./mvnw verify
 
-  # tags on master are automatically deployed to staging
+  # commits on master are automatically deployed to staging
   - name: build (staging)
     image: rfjbraunstingl/datasti-build-image:latest
     when:
       branch:
         - master
       ref:
-        - refs/tags/**
+        exclude:
+          - refs/tags/**
     environment:
       QUARKUS_KUBERNETES_REPLICAS: 1
       CONTAINER_REGISTRY:
@@ -71,7 +77,8 @@ steps:
       branch:
         - master
       ref:
-        - refs/tags/**
+        exclude:
+          - refs/tags/**
     environment:
       RFJ_K8S_SERVER:
         from_secret: k8s-server
@@ -79,6 +86,45 @@ steps:
         from_secret: k8s-token
     commands:
       - kubectl apply -f backend/target/kubernetes/kubernetes.yml --namespace staging --server $RFJ_K8S_SERVER --insecure-skip-tls-verify --token $RFJ_K8S_TOKEN
+
+  # tags on master are automatically deployed to production
+  - name: build (production)
+    image: rfjbraunstingl/datasti-build-image:latest
+    when:
+      branch:
+        - master
+      ref:
+        - refs/tags/**
+    environment:
+      QUARKUS_KUBERNETES_REPLICAS: 2
+      CONTAINER_REGISTRY:
+        from_secret: container-image-registry
+      CONTAINER_GROUP:
+        from_secret: container-image-group
+      CONTAINER_NAME:
+        from_secret: container-image-name
+      CONTAINER_USERNAME:
+        from_secret: container-image-registry-user
+      CONTAINER_PASSWORD:
+        from_secret: container-image-registry-pass
+    commands:
+      - cd backend
+      - ./mvnw clean package -DskipTests=true -Dquarkus.container-image.push=true
+
+  - name: deploy (production)
+    image: bitnami/kubectl:latest
+    when:
+      branch:
+        - master
+      ref:
+        - refs/tags/**
+    environment:
+      RFJ_K8S_SERVER:
+        from_secret: k8s-server
+      RFJ_K8S_TOKEN:
+        from_secret: k8s-token
+    commands:
+      - kubectl apply -f backend/target/kubernetes/kubernetes.yml --namespace production --server $RFJ_K8S_SERVER --insecure-skip-tls-verify --token $RFJ_K8S_TOKEN
 
 services:
   - name: mongodb
