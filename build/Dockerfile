@@ -2,6 +2,6 @@ FROM adoptopenjdk:11-jdk-hotspot
 
 RUN apt update && apt install -y nodejs npm
 
-RUN ls -lah
+ADD backend .
 
-RUN cd ../backend && ./mvnw dependency:resolve
+RUN ./mvnw dependency:resolve
