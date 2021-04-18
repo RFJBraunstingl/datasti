@@ -52,7 +52,6 @@ steps:
     commands:
       - kubectl apply -f target/kubernetes/kubernetes.yml --namespace $DRONE_DEPLOY_TO --server $RFJ_K8S_SERVER --insecure-skip-tls-verify --token $RFJ_K8S_TOKEN
 
-
 services:
   - name: mongodb
     image: mongo
