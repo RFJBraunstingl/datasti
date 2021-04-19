@@ -42,6 +42,7 @@ steps:
           - promote
     environment:
       DATABASE_URL: mongodb://mongodb:27017
+      DATASTI_BASE_URL: http://localhost:9999
     commands:
       - cd backend
       - ./mvnw verify
@@ -56,6 +57,7 @@ steps:
         exclude:
           - refs/tags/**
     environment:
+      DATASTI_BASE_URL: https://staging.datasti.app
       QUARKUS_KUBERNETES_REPLICAS: 1
       CONTAINER_REGISTRY:
         from_secret: container-image-registry
@@ -96,6 +98,7 @@ steps:
       ref:
         - refs/tags/**
     environment:
+      DATASTI_BASE_URL: https://datasti.app
       QUARKUS_KUBERNETES_REPLICAS: 2
       CONTAINER_REGISTRY:
         from_secret: container-image-registry
