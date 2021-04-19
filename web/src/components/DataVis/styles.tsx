@@ -7,9 +7,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       minWidth: 120,
     },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
     header: {
       display: "flex",
       justifyContent: "space-between",
