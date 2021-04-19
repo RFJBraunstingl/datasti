@@ -1,20 +1,13 @@
-import React, {useEffect, useState} from "react";
-import useApi from "../../hooks/useApi";
-import {Datapoint} from "../../types/Datapoint";
+import React from "react"
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import {Datapoint} from "../../../types/Datapoint";
 
-export default function DataVis(props: any) {
+interface Props {
+    data: Datapoint[]
+}
 
-    const [data, setData] = useState<Datapoint[]>([])
-    const {getAllDatapoints} = useApi();
-
-    useEffect(() => {
-        getAllDatapoints(props.match.params.container)
-            .then(setData)
-            .catch(e => console.error(e))
-    }, [getAllDatapoints, props.match.params.container])
-
-    return <Table>
+const TableView = ({data}: Props) => (
+    <Table>
         <TableHead>
             <TableRow>
                 <TableCell>
@@ -44,18 +37,6 @@ export default function DataVis(props: any) {
             )}
         </TableBody>
     </Table>
+)
 
-    /* graph stuff
-
-    const plotHeight = 600;
-    const plotWidth = 1000;
-
-    return (
-        <PlotTemplate width={plotWidth} height={plotHeight}>
-            <LinePlot data={RandomDateData(31)}>
-                <BasicAxis anchor={AxisAnchor.LEFT} unit={"kg"} ticks={5}/>
-                <DateAxis anchor={AxisAnchor.BOTTOM} unit={"kg"} ticks={30}/>
-            </LinePlot>
-        </PlotTemplate>
-    );*/
-}
+export default TableView

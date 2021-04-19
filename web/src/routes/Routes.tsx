@@ -5,7 +5,7 @@ import SignIn from "../components/SignIn/SignIn";
 import SignUp from "../components/SignIn/SignUp";
 import Dashboard from "../components/dashboard/Dashboard";
 import CreateContainerForm from "../components/CreateContainerForm";
-import DataVis from "../components/datavis/DataVis";
+import DataVis from "../components/DataVis";
 
 function Routes() {
     return (
