@@ -8,6 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import {Alert} from '@material-ui/lab'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
@@ -40,6 +41,7 @@ export default function SignIn() {
     const classes = useStyles();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [alert, setAlert] = useState(null)
 
     const {push} = useHistory()
 
@@ -47,9 +49,21 @@ export default function SignIn() {
 
     const navigateToDashboard = () => push('/dashboard')
 
+    const showErrorMessage = (errorMessage) => {
+        setAlert(
+            <Alert
+                onClose={() => setAlert(null)}
+                severity="error">{errorMessage}
+            </Alert>
+        )
+    }
+
     const onSubmit = () => login(username, password)
-            .then(navigateToDashboard)
-            .catch(e => console.error(e))
+        .then(navigateToDashboard)
+        .catch(e => {
+            console.error(e)
+            showErrorMessage('Could not log you in! Are username & password correct?')
+        })
 
     return (
         <Container component="main" maxWidth="xs">
@@ -61,6 +75,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
+                {alert}
                 <TextField
                     variant="outlined"
                     margin="normal"
