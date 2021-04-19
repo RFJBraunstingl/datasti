@@ -21,7 +21,7 @@ export default function DataVis(props: any) {
         getAllDatapoints(container)
             .then(setData)
             .catch((e) => console.error(e));
-    }, [getAllDatapoints, props.match.params.container]);
+    }, [container, getAllDatapoints, props.match.params.container]);
 
     const renderDataView = () => {
         switch (dataMode) {
