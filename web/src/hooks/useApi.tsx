@@ -5,6 +5,7 @@ import {Datapoint} from "../types/Datapoint";
 
 interface API {
     login: (username: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
     getAllContainers: () => Promise<Container[]>;
     createContainer: (container: Container) => Promise<Container>;
     getAllDatapoints: (containerName: string) => Promise<Datapoint[]>;
@@ -116,6 +117,13 @@ class RestAPI implements API {
             return Promise.reject(e);
         }
     };
+
+    logout: () => Promise<void> = async () => {
+        this.username = undefined;
+        this.password = undefined;
+        this.bearerToken = undefined;
+        return Promise.resolve();
+    }
 
     getBearerToken: () => Promise<string> = async () => {
         console.debug('generating new bearer token');

@@ -1,8 +1,8 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import LandingPage from "../components/landing_page/LandingPageVersion2";
-import SignIn from "../components/login/SignIn";
-import SignUp from "../components/login/SignUp";
+import SignIn from "../components/SignIn/SignIn";
+import SignUp from "../components/SignIn/SignUp";
 import Dashboard from "../components/dashboard/Dashboard";
 import CreateContainerForm from "../components/CreateContainerForm";
 import DataVis from "../components/datavis/DataVis";

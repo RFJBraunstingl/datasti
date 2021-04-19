@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import useApi from "../../hooks/useApi";
 import {Link as RouterLink, useHistory} from "react-router-dom";
 import Copyright from "./Copyright";
+import UserContext from "../../contexts/user-context"
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,12 +43,20 @@ export default function SignIn() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [alert, setAlert] = useState(null)
+    const {setUser} = useContext(UserContext)
 
     const {push} = useHistory()
 
     const {login} = useApi()
 
-    const navigateToDashboard = () => push('/dashboard')
+    const navigateToDashboard = () => {
+        setUser({
+            firstname: '',
+            lastname: '',
+            username: username
+        })
+        push('/dashboard')
+    }
 
     const showErrorMessage = (errorMessage) => {
         setAlert(
