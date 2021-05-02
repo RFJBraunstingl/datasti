@@ -18,3 +18,7 @@ export function numberConverter(n: number, d: number = 1) {
   x -= x % 3;
   return Math.round((n * d) / p(10, x)) / d + " kMGTPE"[x / 3];
 }
+
+export function dateConverter(date: number): string {
+  return new Date(date).toLocaleString();
+}

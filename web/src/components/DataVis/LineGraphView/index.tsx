@@ -2,7 +2,6 @@ import React from "react";
 import {Datapoint as DatastiDatapoint} from "../../../types/Datapoint";
 import {PlotTemplate} from "../../Plot/templates/PlotTemplate";
 import {LinePlot} from "../../Plot/templates/line/LinePlot";
-import {RandomDateData} from "../../../utils/DataGenerator";
 import {BasicAxis} from "../../Plot/templates/axis/BasicAxis";
 import {DateAxis} from "../../Plot/templates/axis/DateAxis";
 import {AxisAnchor} from "../../Plot/templates/axis/AxisConsts";

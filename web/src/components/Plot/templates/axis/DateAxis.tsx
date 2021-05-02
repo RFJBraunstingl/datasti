@@ -2,6 +2,7 @@ import {AxisAnchor, AxisDefaultProps, AxisProps} from "./AxisConsts";
 import React from "react";
 import {AxisUnit} from "./unit/Units";
 import {plotFontSize} from "../PlotConsts";
+import {dateConverter} from "../../utils/Utils";
 
 export function DateAxis(props: AxisProps) {
     let axis = <></>;
@@ -53,7 +54,7 @@ function DateAxisLeft(props: AxisProps) {
                 fontFamily="'Montserrat', sans-serif"
                 textAnchor="end"
             >
-                {new Date(d).getDate()}
+                {dateConverter(d)}
             </text>
         </g>
     ));
@@ -78,7 +79,7 @@ function DateAxisRight(props: AxisProps) {
                 y={props.yScale(d)}
                 fontFamily="'Montserrat', sans-serif"
             >
-                {new Date(d).getDate()}
+                {dateConverter(d)}
             </text>
         </g>
     ));
@@ -107,7 +108,7 @@ function DateAxisBottom(props: AxisProps) {
                     y={props.height + textPadding}
                     fontFamily="'Montserrat', sans-serif"
                 >
-                    {new Date(d).toLocaleString()}
+                    {dateConverter(d)}
                 </text>
             </g>
         )
@@ -133,7 +134,7 @@ function DateAxisTop(props: AxisProps) {
                 y={textPadding}
                 fontFamily="'Montserrat', sans-serif"
             >
-                {new Date(d).getDate()}
+                {dateConverter(d)}
             </text>
         </g>
     ));
