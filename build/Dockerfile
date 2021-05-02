@@ -4,4 +4,4 @@ RUN apt update && apt install -y nodejs npm
 
 ADD backend .
 
-RUN ./mvnw dependency:go-offline
+RUN ./mvnw dependency:go-offline package clean
