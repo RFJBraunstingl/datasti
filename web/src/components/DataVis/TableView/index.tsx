@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { Datapoint } from "../../../types/Datapoint";
+import {dateConverter} from "../../Plot/utils/Utils";
 
 interface Props {
   data: Datapoint[];
@@ -24,7 +25,7 @@ const TableView = ({ data }: Props) => (
     <TableBody>
       {data.map((datapoint) => (
         <TableRow key={datapoint.timestamp}>
-          <TableCell>{datapoint.timestamp}</TableCell>
+          <TableCell>{dateConverter(+datapoint.timestamp!!)}</TableCell>
           <TableCell>{datapoint.label}</TableCell>
           <TableCell>{datapoint.value}</TableCell>
         </TableRow>
