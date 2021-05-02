@@ -20,4 +20,8 @@ export default class DataPoint {
     this.y = y;
     this.sub_category = sub_category ? sub_category : "";
   }
+
+  toLocaleString = () => {
+    return `${this.x.toLocaleString()}: ${this.y.toLocaleString()}`;
+  }
 }

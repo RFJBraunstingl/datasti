@@ -14,9 +14,10 @@ interface Props {
     container: string;
     hidden: boolean;
     onClose: () => void;
+    onDataAdded?: () => void;
 }
 
-const AddDatapointDialog = ({container, hidden, onClose}: Props) => {
+const AddDatapointDialog = ({container, hidden, onClose, onDataAdded = () => {}}: Props) => {
 
     const [value, setValue] = useState<string>('');
     const [label, setLabel] = useState<string>('');
@@ -26,9 +27,10 @@ const AddDatapointDialog = ({container, hidden, onClose}: Props) => {
     const saveData = () => saveDatapoint(container, {
         value,
         label,
-    })
-        .then(onClose)
-        .catch(e => console.error(e))
+    }).then(_ => {
+        onDataAdded()
+        onClose()
+    }).catch(e => console.error(e))
 
     return <Dialog open={!hidden} onClose={onClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add datapoint</DialogTitle>

@@ -17,11 +17,14 @@ export default function DataVis(props: any) {
     const [dataMode, setDataMode] = useState<DataMode>("Table");
     const container = props.match.params.container;
 
-    useEffect(() => {
+    const reloadDatapoints = () => {
         getAllDatapoints(container)
             .then(setData)
             .catch((e) => console.error(e));
-    }, [container, getAllDatapoints, props.match.params.container]);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => reloadDatapoints(), []);
 
     const renderDataView = () => {
         switch (dataMode) {
@@ -39,7 +42,8 @@ export default function DataVis(props: any) {
             <Header container={container}
                     possibleModes={dataModes}
                     dataMode={dataMode}
-                    setDataMode={setDataMode}/>
+                    setDataMode={setDataMode}
+                    onDatapointAdded={reloadDatapoints}/>
             <div className={classes.visualization}>{renderDataView()}</div>
         </>
     );

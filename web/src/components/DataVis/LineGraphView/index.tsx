@@ -24,8 +24,8 @@ const LineGraphView = ({data}: Props) => {
         .map(value => new DataPoint(
             DataType.NumberOverDate,
             toDate(value.timestamp!!),
-            +value.value)
-        );
+            +value.value
+        ));
 
     return (
         <PlotTemplate width={plotWidth} height={plotHeight}>

@@ -8,16 +8,17 @@ interface Props {
     dataMode: string;
     possibleModes: Array<string>;
     setDataMode: (mode: string) => void;
+    onDatapointAdded: () => any;
 }
 
-const Header = ({container, dataMode, possibleModes, setDataMode}: Props) => {
+const Header = ({container, dataMode, possibleModes, setDataMode, onDatapointAdded}: Props) => {
     const classes = useStyles();
     const [displayAddDatapointDialog, setDisplayAddDatapointDialog] = useState(false);
 
     const onModeUpdate = (event: { target: { value: string; }; }) => setDataMode(event.target.value)
 
     return <>
-        <AddDatapointDialog container={container} hidden={!displayAddDatapointDialog} onClose={() => setDisplayAddDatapointDialog(false)}/>
+        <AddDatapointDialog container={container} hidden={!displayAddDatapointDialog} onClose={() => setDisplayAddDatapointDialog(false)} onDataAdded={onDatapointAdded}/>
         <div className={classes.header}>
             <FormControl className={classes.formControl}>
                 <NativeSelect
